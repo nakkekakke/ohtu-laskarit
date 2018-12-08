@@ -10,6 +10,7 @@ public class Nollaa implements Komento {
     private Button nollaa;
     private Button undo;
     private Sovelluslogiikka sovellus;
+    private Integer edellinenTulos;
     
     public Nollaa(TextField tuloskentta, TextField syotekentta, Button nollaa, Button undo, Sovelluslogiikka sovellus) {
         this.tuloskentta = tuloskentta;
@@ -21,14 +22,20 @@ public class Nollaa implements Komento {
 
     @Override
     public void suorita() {
+        edellinenTulos = sovellus.tulos();
         sovellus.nollaa();
+        syotekentta.setText("");
+        tuloskentta.setText("0");
         nollaa.disableProperty().set(true);
         undo.disableProperty().set(false);
     }
 
     @Override
     public void peru() {
-        System.out.println("Peruminen valittu");
+        sovellus.setTulos(edellinenTulos);
+        tuloskentta.setText(edellinenTulos.toString());
+        undo.disableProperty().set(true);
+        nollaa.disableProperty().set(false);
     }
 
 }

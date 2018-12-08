@@ -10,6 +10,7 @@ public class Erotus implements Komento {
     private Button nollaa;
     private Button undo;
     private Sovelluslogiikka sovellus;
+    private Integer edellinenTulos;
     
     public Erotus(TextField tuloskentta, TextField syotekentta, Button nollaa, Button undo, Sovelluslogiikka sovellus) {
         this.tuloskentta = tuloskentta;
@@ -26,8 +27,9 @@ public class Erotus implements Komento {
             arvo = Integer.parseInt(syotekentta.getText());
         } catch (Exception e) {
         }
-        sovellus.miinus(arvo);
+        edellinenTulos = sovellus.tulos();
         
+        sovellus.miinus(arvo);
         int laskunTulos = sovellus.tulos();
         
         syotekentta.setText("");
@@ -43,7 +45,10 @@ public class Erotus implements Komento {
 
     @Override
     public void peru() {
-        System.out.println("Peruminen valittu");
+        sovellus.setTulos(edellinenTulos);
+        tuloskentta.setText(edellinenTulos.toString());
+        undo.disableProperty().set(true);
+        nollaa.disableProperty().set(false);
     }
 
 }
